@@ -1,4 +1,6 @@
-# Voice Insights Dashboard (FDE Portfolio Project)
+# Voice Insights Dashboard
+
+![Voice Insights Dashboard — upload screen](docs/images/example1.png)
 
 End-to-end flow: upload **audio** or a **`.txt`** transcript → **AssemblyAI** transcribes audio → **OpenAI** produces summary, sentiment, and keywords. Word metrics are computed from the full transcript locally.
 
@@ -40,12 +42,6 @@ streamlit run frontend/app.py
 - Large files may take several minutes; keep both terminals open.
 
 Artifacts per job: `data/jobs/<id>/input/`, `transcript.txt`, `output/insights.json` (under `data/jobs/` — gitignored).
-
-## UI example
-
-Streamlit app: upload audio or a `.txt` transcript, then **Process**.
-
-![Voice Insights Dashboard — upload screen](docs/images/example1.png)
 
 ## Environment variables
 
