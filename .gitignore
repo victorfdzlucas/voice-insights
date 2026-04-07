@@ -1,3 +1,18 @@
-# Local secrets — never commit
+# Secrets — never commit
 .env
 voice-insights-dashboard/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+.Python
+
+# OS
+.DS_Store
+
+# Generated job uploads & outputs (local only)
+voice-insights-dashboard/data/jobs/

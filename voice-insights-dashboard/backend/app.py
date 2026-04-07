@@ -47,7 +47,7 @@ def _run_pipeline(job_id: str, saved_path: Path):
         _set_status(job_id, "failed", detail=str(e))
 
 @app.post("/upload", response_model=UploadResponse)
-async def upload(file: UploadFile = File(...), background_tasks: BackgroundTasks = None):
+async def upload(background_tasks: BackgroundTasks, file: UploadFile = File(...)):
     job_id = str(uuid.uuid4())
     content = await file.read()
     saved_path = save_upload(job_id, file.filename, content)

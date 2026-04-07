@@ -6,7 +6,9 @@ as plug-and-play TODOs; this starter works offline with a deterministic mock pip
 
 ## Quickstart (Local Dev)
 
-### 1) Clone & create env
+From this folder (`voice-insights-dashboard/`):
+
+### 1) Create env & install
 ```bash
 python -m venv .venv && source .venv/bin/activate   # (Windows: .venv\Scripts\activate)
 pip install -r requirements.txt
@@ -22,6 +24,8 @@ uvicorn backend.app:app --reload --port 8000
 ```bash
 streamlit run frontend/app.py
 ```
+
+Uploads and job outputs are written under `data/jobs/` (ignored by git; created automatically).
 
 ### 4) Use it
 - Open the Streamlit URL it prints (usually http://localhost:8501)
