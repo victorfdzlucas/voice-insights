@@ -1,10 +1,10 @@
 # Voice Insights Dashboard
 
+End-to-end flow: upload **audio** or a **`.txt`** transcript → **AssemblyAI** transcribes audio → **OpenAI** produces summary, sentiment, and keywords. Word metrics are computed from the full transcript locally.
+
 ![Voice Insights Dashboard — upload screen](docs/images/example1.png)
 
 ![Voice Insights Dashboard — summary, metrics, and transcript preview](docs/images/example2.png)
-
-End-to-end flow: upload **audio** or a **`.txt`** transcript → **AssemblyAI** transcribes audio → **OpenAI** produces summary, sentiment, and keywords. Word metrics are computed from the full transcript locally.
 
 ## Prerequisites
 
