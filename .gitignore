@@ -1,6 +1,5 @@
 # Secrets — never commit
 .env
-voice-insights-dashboard/.env
 
 # Python
 __pycache__/
@@ -15,4 +14,4 @@ venv/
 .DS_Store
 
 # Generated job uploads & outputs (local only)
-voice-insights-dashboard/data/jobs/
+data/jobs/

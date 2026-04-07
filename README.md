@@ -1,25 +1,71 @@
-# Voice Insights Dashboard
+# Voice Insights Dashboard (FDE Portfolio Project)
 
-End-to-end demo: upload audio or a `.txt` transcript, process with a **FastAPI** backend, explore insights in **Streamlit**.
+Minimal end-to-end prototype: upload audio (or a `.txt` transcript), process it in a **FastAPI** backend, and explore insights on a **Streamlit** frontend. Provider hooks (AssemblyAI, OpenAI) are TODOs; a deterministic **mock** pipeline runs offline for fast demos.
 
-The application lives in **`voice-insights-dashboard/`**. See that folder’s [README](voice-insights-dashboard/README.md) for setup, env vars, and architecture.
+## Quickstart (local dev)
 
-## Quick links
-
-- [Runbook / operations](voice-insights-dashboard/docs/operations.md)
-- [`.env.example`](voice-insights-dashboard/.env.example) — copy to `voice-insights-dashboard/.env` (never commit real keys)
-
-## Clone & run (summary)
+### 1) Create env and install
 
 ```bash
-cd voice-insights-dashboard
-python -m venv .venv && source .venv/bin/activate
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
-# Terminal 1: uvicorn backend.app:app --reload --port 8000
-# Terminal 2: streamlit run frontend/app.py
 ```
+
+### 2) Run backend (terminal 1)
+
+```bash
+uvicorn backend.app:app --reload --port 8000
+```
+
+### 3) Run frontend (terminal 2)
+
+```bash
+streamlit run frontend/app.py
+```
+
+Uploads and job outputs go under `data/jobs/` (ignored by git; created automatically).
+
+### 4) Use it
+
+- Open the Streamlit URL (usually http://localhost:8501)
+- Upload audio **or** a `.txt` transcript
+- The backend runs the mock pipeline; the UI shows results
+
+## Environment variables (`.env`)
+
+- `DATA_DIR` — job storage (default: `data/`)
+- `BACKEND_BASE_URL` — Streamlit → API URL (default: `http://localhost:8000`)
+- `ASSEMBLYAI_API_KEY` — optional, for a real transcription provider (TODO)
+- `OPENAI_API_KEY` — optional, for real NLP summarization (TODO)
+
+## Project layout
+
+```
+.
+├─ backend/           # FastAPI: /health, /upload, /jobs/{id}, /insights/{id}
+├─ frontend/          # Streamlit UI
+├─ docs/
+│  └─ operations.md   # Dev runbook
+├─ data/              # .gitkeep only; jobs live in data/jobs/ locally
+├─ .env.example
+├─ requirements.txt
+└─ README.md
+```
+
+VS Code / Cursor: see [`.vscode/tasks.json`](.vscode/tasks.json) for install / run tasks.
+
+## Roadmap (ideas)
+
+- Real AssemblyAI / OpenAI adapters
+- Diarization metrics if the provider supports it
+- PostgreSQL + Alembic; object storage
+- Docker / docker-compose
+- Webhooks or Slack on job completion
+- Basic auth / API key gate
 
 ---
 
-Portfolio / FDE-style MVP by Víctor Fernández.
+**Note:** Kept dependency-light on purpose for time-to-demo.
+
+Portfolio MVP by Víctor Fernández.
