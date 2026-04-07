@@ -1,15 +1,22 @@
 # Voice Insights Dashboard (FDE Portfolio Project)
 
-Minimal end-to-end prototype: upload audio (or a `.txt` transcript), process it in a **FastAPI** backend, and explore insights on a **Streamlit** frontend. Provider hooks (AssemblyAI, OpenAI) are TODOs; a deterministic **mock** pipeline runs offline for fast demos.
+End-to-end flow: upload **audio** or a **`.txt`** transcript → **AssemblyAI** transcribes audio → **OpenAI** produces summary, sentiment, and keywords. Word metrics are computed from the full transcript locally.
+
+## Prerequisites
+
+- Python 3.10+
+- **[OpenAI API key](https://platform.openai.com/api-keys)** — required for every run (insights).
+- **[AssemblyAI API key](https://www.assemblyai.com/dashboard/signup)** — required only when uploading **audio** (not needed for `.txt` only).
 
 ## Quickstart (local dev)
 
-### 1) Create env and install
+### 1) Environment and install
 
 ```bash
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
+# Edit .env: set OPENAI_API_KEY and (for audio) ASSEMBLYAI_API_KEY
 ```
 
 ### 2) Run backend (terminal 1)
@@ -18,54 +25,55 @@ cp .env.example .env
 uvicorn backend.app:app --reload --port 8000
 ```
 
+Check `http://127.0.0.1:8000/health` — `openai_configured` / `assemblyai_configured` show whether keys are loaded.
+
 ### 3) Run frontend (terminal 2)
 
 ```bash
 streamlit run frontend/app.py
 ```
 
-Uploads and job outputs go under `data/jobs/` (ignored by git; created automatically).
-
 ### 4) Use it
 
-- Open the Streamlit URL (usually http://localhost:8501)
-- Upload audio **or** a `.txt` transcript
-- The backend runs the mock pipeline; the UI shows results
+- Open Streamlit (usually http://localhost:8501).
+- Upload **audio** (mp3, wav, m4a, flac, ogg) or a **`.txt`** transcript.
+- Large files may take several minutes; keep both terminals open.
 
-## Environment variables (`.env`)
+Artifacts per job: `data/jobs/<id>/input/`, `transcript.txt`, `output/insights.json` (under `data/jobs/` — gitignored).
 
-- `DATA_DIR` — job storage (default: `data/`)
-- `BACKEND_BASE_URL` — Streamlit → API URL (default: `http://localhost:8000`)
-- `ASSEMBLYAI_API_KEY` — optional, for a real transcription provider (TODO)
-- `OPENAI_API_KEY` — optional, for real NLP summarization (TODO)
+## Environment variables
+
+| Variable | Purpose |
+|----------|---------|
+| `OPENAI_API_KEY` | **Required.** Powers summary, sentiment, keywords. |
+| `ASSEMBLYAI_API_KEY` | **Required for audio.** Ignored if you only use `.txt`. |
+| `OPENAI_MODEL` | Optional. Default `gpt-4o-mini`. |
+| `DATA_DIR` | Job storage root (default `data`). |
+| `BACKEND_BASE_URL` | Streamlit → API URL (default `http://localhost:8000`). |
+| `TRANSCRIPT_PREVIEW_CHARS` | Optional. Preview length in API/UI (default `2000`). |
 
 ## Project layout
 
 ```
 .
-├─ backend/           # FastAPI: /health, /upload, /jobs/{id}, /insights/{id}
+├─ backend/           # FastAPI + pipeline (AssemblyAI + OpenAI)
 ├─ frontend/          # Streamlit UI
-├─ docs/
-│  └─ operations.md   # Dev runbook
-├─ data/              # .gitkeep only; jobs live in data/jobs/ locally
+├─ docs/operations.md
+├─ data/              # .gitkeep; runtime jobs in data/jobs/
 ├─ .env.example
 ├─ requirements.txt
 └─ README.md
 ```
 
-VS Code / Cursor: see [`.vscode/tasks.json`](.vscode/tasks.json) for install / run tasks.
+VS Code / Cursor: [`.vscode/tasks.json`](.vscode/tasks.json).
 
 ## Roadmap (ideas)
 
-- Real AssemblyAI / OpenAI adapters
-- Diarization metrics if the provider supports it
-- PostgreSQL + Alembic; object storage
+- Speaker diarization via AssemblyAI config
+- PostgreSQL + object storage
 - Docker / docker-compose
-- Webhooks or Slack on job completion
-- Basic auth / API key gate
+- Auth / API key gate for the API
 
 ---
-
-**Note:** Kept dependency-light on purpose for time-to-demo.
 
 Portfolio MVP by Víctor Fernández.

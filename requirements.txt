@@ -1,7 +1,9 @@
-fastapi
-uvicorn
-python-multipart
-pydantic
-python-dotenv
-streamlit
-requests
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9
+pydantic>=2.0
+python-dotenv>=1.0.0
+streamlit>=1.38.0
+requests>=2.31.0
+assemblyai>=0.40.0
+openai>=1.40.0

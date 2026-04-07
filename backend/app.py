@@ -29,7 +29,11 @@ class UploadResponse(BaseModel):
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "openai_configured": bool((os.getenv("OPENAI_API_KEY") or "").strip()),
+        "assemblyai_configured": bool((os.getenv("ASSEMBLYAI_API_KEY") or "").strip()),
+    }
 
 def _set_status(job_id: str, status: str, detail: Optional[str] = None):
     JOBS[job_id] = {"job_id": job_id, "status": status}
