@@ -8,7 +8,7 @@ BACKEND = os.getenv("BACKEND_BASE_URL", "http://localhost:8000")
 
 st.set_page_config(page_title="Voice Insights Dashboard", layout="wide")
 
-st.title("🎙️ Voice Insights Dashboard — MVP (By Víctor Fernández)")
+st.title("🎙️ Voice Insights Dashboard")
 
 with st.sidebar:
     st.markdown("**Backend**: " + BACKEND)
