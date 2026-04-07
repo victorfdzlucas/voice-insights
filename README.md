@@ -41,6 +41,12 @@ streamlit run frontend/app.py
 
 Artifacts per job: `data/jobs/<id>/input/`, `transcript.txt`, `output/insights.json` (under `data/jobs/` — gitignored).
 
+## UI example
+
+Streamlit app: upload audio or a `.txt` transcript, then **Process**.
+
+![Voice Insights Dashboard — upload screen](docs/images/example1.png)
+
 ## Environment variables
 
 | Variable | Purpose |
@@ -58,7 +64,9 @@ Artifacts per job: `data/jobs/<id>/input/`, `transcript.txt`, `output/insights.j
 .
 ├─ backend/           # FastAPI + pipeline (AssemblyAI + OpenAI)
 ├─ frontend/          # Streamlit UI
-├─ docs/operations.md
+├─ docs/
+│  ├─ operations.md
+│  └─ images/example1.png   # README screenshot
 ├─ data/              # .gitkeep; runtime jobs in data/jobs/
 ├─ .env.example
 ├─ requirements.txt
